@@ -11,8 +11,8 @@ theme:
     text: Roboto
     code: Roboto Mono
   features:
-    - navigation.tabs
-    - navigation.tabs.sticky
+    # - navigation.tabs
+    # - navigation.tabs.sticky
     - navigation.top
     - navigation.sections
     - navigation.instant
@@ -42,6 +42,7 @@ theme:
 
 nav:
   - Информация о курсе: index.md
+  - Знакомство с данными: looking_at_your_data.md
 
 extra:
   social:
