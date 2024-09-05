@@ -43,6 +43,7 @@ theme:
 nav:
   - Информация о курсе: index.md
   - Знакомство с данными: looking_at_your_data.md
+  - Использование WHERE для выбора данных: selecting_data_subsets.md
 
 extra:
   social:
