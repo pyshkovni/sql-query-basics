@@ -46,7 +46,7 @@ nav:
   - Использование WHERE для выбора данных: selecting_data_subsets.md
 
 extra:
-  social:
+  social:·
     - icon: fontawesome/brands/github
       link: https://github.com/pyshkovni
     - icon: fontawesome/brands/youtube
