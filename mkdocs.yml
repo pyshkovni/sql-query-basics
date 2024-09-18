@@ -4,6 +4,7 @@ site_description: курс по основам SQL для запроса дан�
 
 docs_dir: docs
 theme:
+  custom_dir: overrides
   name: material
   icon:
     logo: material/database
