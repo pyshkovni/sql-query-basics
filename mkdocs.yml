@@ -44,6 +44,8 @@ nav:
   - Информация о курсе: index.md
   - Знакомство с данными: looking_at_your_data.md
   - Использование WHERE для выбора данных: selecting_data_subsets.md
+  - Способы форматирования результатов запроса: formatting_selected_data.md
+  - Агрегация данных: summarizing_your_data.md
 
 extra:
   social:
