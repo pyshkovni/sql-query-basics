@@ -1,0 +1,911 @@
+
+<!doctype html>
+<html lang="ru" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="курс по основам SQL для запроса данных">
+      
+      
+      
+      
+        <link rel="prev" href="../summaries_of_groups_of_data/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.39">
+    
+    
+      
+        <title>Объединение таблиц в запросе - SQL-query basics</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.8c3ca2c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Перейти к содержанию
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+            
+
+    Если вы обнаружили ошибку, пишите <a rel="telegram" href="https://t.me/pyshkovni"><strong>@pyshkovni</strong></a> или <a href="https://github.com/pyshkovni/sql-query-basics/issues"><strong>сообщите об ошибке в github</strong></a>. Благодарю за помощь!
+
+
+          </div>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Верхний колонтитул">
+    <a href=".." title="SQL-query basics" class="md-header__button md-logo" aria-label="SQL-query basics" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SQL-query basics
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Объединение таблиц в запросе
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="light-blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Поиск" placeholder="Поиск" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Поиск">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистить" aria-label="Очистить" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Инициализация поиска
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Навигация" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="SQL-query basics" class="md-nav__button md-logo" aria-label="SQL-query basics" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4"/></svg>
+
+    </a>
+    SQL-query basics
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Информация о курсе
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../looking_at_your_data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Знакомство с данными
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../selecting_data_subsets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Использование WHERE для выбора данных
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../formatting_selected_data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Способы форматирования результатов запроса
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../summarizing_your_data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Агрегация данных
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../summaries_of_groups_of_data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Группировка данных в запросе
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Объединение таблиц в запросе
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Объединение таблиц в запросе
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Содержание">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Содержание
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Требования к объединенному
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Требования к объединенному">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Вопрос 1
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Объединение более двух таблиц
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Объединение более двух таблиц">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Вопрос 2
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Практика темы 6
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Практика темы 6">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Вопрос 3
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Вопрос 4
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Вопрос 5
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Содержание">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Содержание
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Требования к объединенному
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Требования к объединенному">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Вопрос 1
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Объединение более двух таблиц
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Объединение более двух таблиц">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Вопрос 2
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Практика темы 6
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Практика темы 6">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Вопрос 3
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Вопрос 4
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Вопрос 5
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="_1">Объединение таблиц в запросе</h1>
+<!-- TODO поправь перевод -->
+<!-- TODO переделать в раздел про datalens -->
+<!-- TODO inner joins переложить кратко в превом разделе для см -->
+
+<details class="info">
+<summary>Подключение к базе данных</summary>
+<p>Для отработки запросов используйте тренажер<br>
+<br>
+ссылка: <a href="http://mysqldognition.online/phpmyadmin/">http://mysqldognition.online/phpmyadmin/</a><br>
+логин: student<br>
+пароль: n123456789</p>
+</details>
+<h2 id="_2">Требования к объединенному</h2>
+<p>Напомним, что таблицы в реляционных базах данных связаны через первичные ключи и иногда другие поля, которые являются общими для нескольких таблиц (как в случае с нашим набором данных распознавания).  Наша цель, когда мы выполняем ОБЪЕДИНЕНИЕ или создаем объединенную таблицу, состоит в том, чтобы использовать эти общие столбцы, чтобы позволить базе данных определить, какие строки в одной таблице соответствуют каким строкам в другой таблице.  Как только это сопоставление установлено с использованием хотя бы одного общего поля или столбца, база данных может извлекать любые столбцы, которые вы хотите, из сопоставленных или объединенных таблиц и выводить сопоставленные данные в одну общую таблицу.</p>
+<p>Внутреннее соединение - это соединение, которое выводит только те строки, которые имеют точное совпадение в обеих объединяемых таблицах:</p>
+<p><img src="https://duke.box.com/shared/static/xazeqtyq6bjo12ojvgxup4bx0e9qcn5d.jpg" width=700 alt="INNER_JOIN" /></p>
+<p>Чтобы проиллюстрировать, как это работает, давайте выясним, имеют ли владельцы собак, которые особенно удивлены результатами тестов на распознавание, как правило, похожие породы (или типы пород, или группы пород) собак.  Есть много способов ответить на этот вопрос, но давайте начнем с того, что сосредоточимся на владельцах собак, которые поставили не менее 10 оценок одной или нескольким своим собакам в таблице оценок. Из этих владельцев, какие 200 владельцев сообщили о наибольшей средней степени удивления поведением своей собаки, и какова была порода, breed_type и breed_group собаки каждого из этих владельцев?</p>
+<p>Неожиданные оценки хранятся в таблице отзывов.  Информация о породе собаки приведена в таблице "Собаки". Есть два столбца, которые являются общими для обеих таблиц: user_guid и dog_guid. Как мы используем общие столбцы для объединения информации из двух таблиц? </p>
+<p>Чтобы объединить таблицы, вы можете использовать предложение WHERE и добавить пару сведений в предложение FROM, чтобы база данных знала, из какой таблицы берется каждое поле в вашем предложении SELECT.  </p>
+<p>Во-первых, начните с добавления всех столбцов, которые мы хотим проверить, в инструкцию SELECT:</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">dog_guid</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">DogID</span><span class="p">,</span><span class="w"> </span><span class="n">user_guid</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">UserID</span><span class="p">,</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">rating</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">AvgRating</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">       </span><span class="k">COUNT</span><span class="p">(</span><span class="n">rating</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">NumRatings</span><span class="p">,</span><span class="w"> </span><span class="n">breed</span><span class="p">,</span><span class="w"> </span><span class="n">breed_group</span><span class="p">,</span><span class="w"> </span><span class="n">breed_type</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">FROM</span><span class="w"> </span><span class="n">dogs</span><span class="p">,</span><span class="w"> </span><span class="n">reviews</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">user_guid</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">HAVING</span><span class="w"> </span><span class="n">NumRatings</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">10</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">AvgRating</span><span class="w"> </span><span class="k">DESC</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">LIMIT</span><span class="w"> </span><span class="mi">200</span>
+</code></pre></div>
+<strong>Вы должны получить сообщение об ошибке</strong>, в котором говорится, что идентификаторы dog_guid и user_guid в списке полей необозначены. Причина в том, что заголовок столбца существует в обеих таблицах, и MySQL не знает, какой из них нам нужен. Мы должны указать имя таблицы перед указанием имени поля и разделить эти два имени точкой</p>
+<p><em>Внимание!!! Запрос не выполнится, так как не оптимизирован и требует много ресурсов</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">dogs</span><span class="p">.</span><span class="n">dog_guid</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">DogID</span><span class="p">,</span><span class="w"> </span><span class="n">dogs</span><span class="p">.</span><span class="n">user_guid</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">UserID</span><span class="p">,</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">reviews</span><span class="p">.</span><span class="n">rating</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">AvgRating</span><span class="p">,</span><span class="w">     </span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">       </span><span class="k">COUNT</span><span class="p">(</span><span class="n">reviews</span><span class="p">.</span><span class="n">rating</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">NumRatings</span><span class="p">,</span><span class="w"> </span><span class="n">dogs</span><span class="p">.</span><span class="n">breed</span><span class="p">,</span><span class="w"> </span><span class="n">dogs</span><span class="p">.</span><span class="n">breed_group</span><span class="p">,</span><span class="w"> </span><span class="n">dogs</span><span class="p">.</span><span class="n">breed_type</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">FROM</span><span class="w"> </span><span class="n">dogs</span><span class="p">,</span><span class="w"> </span><span class="n">reviews</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">dogs</span><span class="p">.</span><span class="n">user_guid</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">HAVING</span><span class="w"> </span><span class="n">NumRatings</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">10</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">AvgRating</span><span class="w"> </span><span class="k">DESC</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="k">LIMIT</span><span class="w"> </span><span class="mi">200</span>
+</code></pre></div></p>
+<p>Вы также можете воспользоваться преимуществами псевдонимов, чтобы вам не приходилось каждый раз записывать названия таблиц.  Здесь я представлю другой синтаксис для псевдонимов, в котором полностью отсутствует AS.  В этом синтаксисе псевдонимом является любое слово (или фраза, если вы используете кавычки), следующее сразу после имени поля или таблицы, разделенное пробелом.  Чтобы мы могли написать:</p>
+<p><em>Внимание!!! Запрос не выполнится, так как не оптимизирован и требует много ресурсов</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">dog_guid</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">DogID</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">user_guid</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">UserID</span><span class="p">,</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">rating</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">AvgRating</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">       </span><span class="k">COUNT</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">rating</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">NumRatings</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed_group</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed_type</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">FROM</span><span class="w"> </span><span class="n">dogs</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">reviews</span><span class="w"> </span><span class="n">r</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">user_guid</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">HAVING</span><span class="w"> </span><span class="n">NumRatings</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">10</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">AvgRating</span><span class="w"> </span><span class="k">DESC</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="k">LIMIT</span><span class="w"> </span><span class="mi">200</span>
+</code></pre></div></p>
+<p>В определения таблиц базы данных не встроено ничего, что могло бы указать серверу, как самостоятельно объединять таблицы (помните, именно так реляционные базы данных экономят место и остаются гибкими).  Кроме того, запрос в том виде, в каком он написан, не сообщает базе данных, как связаны эти две таблицы.  Как следствие, вместо того, чтобы сопоставлять две таблицы в соответствии со значениями в столбце user_id или dog_id, база данных будет делать единственное, что она умеет делать, а именно выводить каждую отдельную комбинацию записей в таблице dogs с записями в таблице reviews.  Другими словами, каждая отдельная строка таблицы dogs будет сопоставлена с каждой отдельной строкой таблицы reviews.  Это известно как декартово произведение.  Вывод таблицы, полная длина которой в одной таблице умножена на полную длину другой, не только будет тяжелым бременем для базы данных (и вас это разочарует, потому что выполнение запроса займет очень много времени), но и вывод будет практически бесполезным.</p>
+<p>Чтобы этого не произошло, укажите базе данных, как связать таблицы в предложении WHERE:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">dog_guid</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">DogID</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">user_guid</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">UserID</span><span class="p">,</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">rating</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">AvgRating</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">       </span><span class="k">COUNT</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">rating</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">NumRatings</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed_group</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed_type</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">FROM</span><span class="w"> </span><span class="n">dogs</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">reviews</span><span class="w"> </span><span class="n">r</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">dog_guid</span><span class="o">=</span><span class="n">r</span><span class="p">.</span><span class="n">dog_guid</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">user_guid</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="k">HAVING</span><span class="w"> </span><span class="n">NumRatings</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">10</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">AvgRating</span><span class="w"> </span><span class="k">DESC</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="k">LIMIT</span><span class="w"> </span><span class="mi">200</span>
+</code></pre></div>
+<p>Чтобы быть очень осторожным и исключить любые неправильные записи dog_guide или user_guide, вы можете включить оба общих столбца в предложение WHERE:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">dog_guid</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">DogID</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">user_guid</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">UserID</span><span class="p">,</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">rating</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">AvgRating</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">       </span><span class="k">COUNT</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">rating</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">NumRatings</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed_group</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed_type</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">FROM</span><span class="w"> </span><span class="n">dogs</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">reviews</span><span class="w"> </span><span class="n">r</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">dog_guid</span><span class="o">=</span><span class="n">r</span><span class="p">.</span><span class="n">dog_guid</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">user_guid</span><span class="o">=</span><span class="n">r</span><span class="p">.</span><span class="n">user_guid</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">user_guid</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="k">HAVING</span><span class="w"> </span><span class="n">NumRatings</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">10</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">AvgRating</span><span class="w"> </span><span class="k">DESC</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="k">LIMIT</span><span class="w"> </span><span class="mi">200</span>
+</code></pre></div>
+<p>Запрос должен выполняться быстро.  Этого не было бы, если бы вы не включили предложение WHERE для объединения двух таблиц. Если вы случайно запросите декартово произведение из наборов данных с миллиардами строк, вам может потребоваться несколько дней для получения результатов запроса (и, вероятно, у вас возникнут проблемы с администратором вашей базы данных). Поэтому всегда не забывайте указывать базе данных, как объединить ваши таблицы!</p>
+<p>Давайте рассмотрим нашу объединенную таблицу немного подробнее.  Объединенная таблица, выводимая приведенным выше запросом, должна содержать 38 строк, несмотря на то, что мы установили наш ЛИМИТ в 200.  Причина этого в том, что оказывается, что относительно небольшое число клиентов предоставили 10 или более отзывов.  Если вы удалите предложение HAVING и LIMIT BY из запроса, у вас должно получиться 389 строк.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">dog_guid</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">DogID</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">user_guid</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">UserID</span><span class="p">,</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">rating</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">AvgRating</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">       </span><span class="k">COUNT</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">rating</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">NumRatings</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed_group</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed_type</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">FROM</span><span class="w"> </span><span class="n">dogs</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">reviews</span><span class="w"> </span><span class="n">r</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">dog_guid</span><span class="o">=</span><span class="n">r</span><span class="p">.</span><span class="n">dog_guid</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">user_guid</span><span class="o">=</span><span class="n">r</span><span class="p">.</span><span class="n">user_guid</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">user_guid</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">AvgRating</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+<p>Из этого вывода становится ясно, что (А) не многие клиенты давали оценки, и (Б) когда они это делали, они ставили не самые высокий рейтинг в отзыве.  Таким образом, эти рейтинги, вероятно, не дадут много полезной информации о том, какие испытания надо улучшать.  Однако таблица рейтингов по-прежнему предоставляет прекрасную возможность проиллюстрировать результаты различных типов объединений.</p>
+<p>Перед написанием запроса, рассмотрим сколько уникальных dog_guid и user_guid есть в таблице reviews и dogs независимо друг от друга?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">dog_guid</span><span class="p">)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">reviews</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">user_guid</span><span class="p">)</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">reviews</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">dog_guid</span><span class="p">)</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">dogs</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">user_guid</span><span class="p">)</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">dogs</span>
+</code></pre></div>
+<p>Эти подсчеты указывают на некоторые важные вещи:</p>
+<ul>
+<li>У многих клиентов как в отзывах, так и в таблице dogs есть несколько собак</li>
+<li>В таблице dogs гораздо больше уникальных dog_guid и user_guid для пользователей, чем в таблице reviews</li>
+<li>В таблице отзывов гораздо больше уникальных dog_guid и user_guid, чем в выходных данных нашего внутреннего соединения</li>
+</ul>
+<p>Давайте проверим еще кое-что.  </p>
+<p>Попробуем запросить один раз только с помощью dog_guid или один раз только с помощью предложения user_guid в инструкции WHERE:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">dog_guid</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">DogID</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">user_guid</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">UserID</span><span class="p">,</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">rating</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">AvgRating</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">       </span><span class="k">COUNT</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">rating</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">NumRatings</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed_group</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed_type</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="k">FROM</span><span class="w"> </span><span class="n">dogs</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">reviews</span><span class="w"> </span><span class="n">r</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">dog_guid</span><span class="o">=</span><span class="n">r</span><span class="p">.</span><span class="n">dog_guid</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">user_guid</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">AvgRating</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+<h3 id="1">Вопрос 1</h3>
+<p><strong>Напишите запрос для таблиц <code>dogs</code> и <code>complete_tests</code>, который позволит получить информацию о колонках <code>user_guid</code>, <code>dog_guid</code>, <code>breed</code>, <code>breed_type</code> и <code>breed_group</code> для всех питомцев, которые проходили испытание "Yawn Warm-up"</strong></p>
+<h2 id="_3">Объединение более двух таблиц</h2>
+<p>Теоретически, вы можете объединить столько таблиц, сколько захотите или в чем возникнет необходимость.  Чтобы объединить несколько таблиц, вы применяете тот же подход, который мы использовали при объединении двух таблиц: перечислите все поля, которые вы хотите извлечь, в инструкции SELECT, укажите, из какой таблицы они взяты в инструкции SELECT, перечислите все таблицы, из которых вам нужно будет извлечь поля в инструкции FROM оператор, а затем сообщите базе данных, как подключить таблицы в операторе WHERE.</p>
+<p>Чтобы извлечь user_guid, штат проживания пользователя, почтовый индекс пользователя, dog_guid, породу, breed_type и breed_group для всех животных, которые завершили игру "Разминка зевком", у вас может возникнуть соблазн запросить:</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">user_guid</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">UserID</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="k">state</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">zip</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">dog_guid</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">DogID</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed_type</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed_group</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">dogs</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">complete_tests</span><span class="w"> </span><span class="k">c</span><span class="p">,</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">u</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">dog_guid</span><span class="o">=</span><span class="k">c</span><span class="p">.</span><span class="n">dog_guid</span><span class="w"> </span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">   </span><span class="k">AND</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">user_guid</span><span class="o">=</span><span class="n">u</span><span class="p">.</span><span class="n">user_guid</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">   </span><span class="k">AND</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">test_name</span><span class="o">=</span><span class="ss">&quot;Yawn Warm-up&quot;</span><span class="p">;</span>
+</code></pre></div>
+Этот запрос фокусирует отношения в первую очередь на таблице complete_tests.  Однако оказывается, что наш набор данных распознавания имеет только нулевые значения в столбце user_guide таблицы complete_tests.  Если бы вы выполнили приведенный выше запрос, вы бы не получили сообщение об ошибке, но в вашем выводе было бы 0 строк.  Однако здесь пригодятся возможности реляционных баз данных.  Вы можете использовать таблицу dogs для связывания таблиц complete_tests и users (обратите внимание на разницу между оператором WHERE в этом запросе и оператор WHERE в приведенном выше запросе):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">user_guid</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">UserID</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="k">state</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">zip</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">dog_guid</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">DogID</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed_type</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">breed_group</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">dogs</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">complete_tests</span><span class="w"> </span><span class="k">c</span><span class="p">,</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">u</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">dog_guid</span><span class="o">=</span><span class="k">c</span><span class="p">.</span><span class="n">dog_guid</span><span class="w"> </span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">   </span><span class="k">AND</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">user_guid</span><span class="o">=</span><span class="n">u</span><span class="p">.</span><span class="n">user_guid</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">   </span><span class="k">AND</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">test_name</span><span class="o">=</span><span class="ss">&quot;Yawn Warm-up&quot;</span><span class="p">;</span>
+</code></pre></div>
+<p>Следует отметить, что объединения требуют очень больших ресурсов, поэтому старайтесь не присоединяться без необходимости.  В общем, чем больше соединений вам придется выполнить, тем медленнее будет производительность вашего запроса.</p>
+<h3 id="2">Вопрос 2</h3>
+<p><strong>Напишите запрос для таблиц <code>dogs</code>, <code>users</code>, <code>complete_tests</code>, который покажет информацию о колонках <code>user_guid</code>, <code>membership_type</code>, <code>dog_guid</code> всех золотистых ретриверов (значение <code>breed</code> <em>"Golden retriever"</em>), которые прошли хотя бы 1 тест из таблицы <code>complete_tests</code></strong></p>
+<h2 id="6">Практика темы 6</h2>
+<h3 id="3">Вопрос 3</h3>
+<p><strong>Сколько собак породы <em>"Golden Retriever"</em> (колонка <code>breed</code>), живущих в Северной Каролине (значение колонки <code>state</code> <em>'NC'</em>) из таблиц <code>users</code>, <code>dogs</code>? Проведите подсчет уникальных значений по идентификаторам <code>dog_guid</code>.</strong></p>
+<h3 id="4">Вопрос 4</h3>
+<p><strong>Сколько клиентов из таблицы <code>reviews</code> в каждой категории членства <code>membership_type</code> оставляли хотя бы один отзыв? Проведите подсчет уникальных значений по идентификаторам <code>user_guid</code>.</strong></p>
+<h3 id="5">Вопрос 5</h3>
+<p><strong>Для каких 3 пород собак <code>breed</code> в базе данных имеется наибольшая активность <code>script_detail_id</code>? Проведите подсчет значений колонки <code>script_detail_id</code> из таблиц <code>dogs</code> и <code>site_activities</code>.</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  К началу
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Нижний колонтитул" >
+        
+          
+          <a href="../summaries_of_groups_of_data/" class="md-footer__link md-footer__link--prev" aria-label="Назад: Группировка данных в запросе">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Назад
+              </span>
+              <div class="md-ellipsis">
+                Группировка данных в запросе
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2024 <a href="https://github.com/pyshkovni"  target="_blank" rel="noopener">Nikita Pyshkov</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/pyshkovni" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/channel/UCFl8u5LGFv0UqhfP5whEoVA" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305m-317.51 213.508V175.185l142.739 81.205z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://t.me/pyshkovni" target="_blank" rel="noopener" title="t.me" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M248 8C111.033 8 0 119.033 0 256s111.033 248 248 248 248-111.033 248-248S384.967 8 248 8m114.952 168.66c-3.732 39.215-19.881 134.378-28.1 178.3-3.476 18.584-10.322 24.816-16.948 25.425-14.4 1.326-25.338-9.517-39.287-18.661-21.827-14.308-34.158-23.215-55.346-37.177-24.485-16.135-8.612-25 5.342-39.5 3.652-3.793 67.107-61.51 68.335-66.746.153-.655.3-3.1-1.154-4.384s-3.59-.849-5.135-.5q-3.283.746-104.608 69.142-14.845 10.194-26.894 9.934c-8.855-.191-25.888-5.006-38.551-9.123-15.531-5.048-27.875-7.717-26.8-16.291q.84-6.7 18.45-13.7 108.446-47.248 144.628-62.3c68.872-28.647 83.183-33.623 92.511-33.789 2.052-.034 6.639.474 9.61 2.885a10.45 10.45 0 0 1 3.53 6.716 43.8 43.8 0 0 1 .417 9.769"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://vk.com/pyshkovni" target="_blank" rel="noopener" title="vk.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M31.49 63.49C0 94.982 0 145.672 0 247.04v17.92c0 101.369 0 152.059 31.49 183.549C62.982 480 113.672 480 215.04 480h17.92c101.369 0 152.059 0 183.549-31.491C448 417.019 448 366.329 448 264.96v-17.92c0-101.369 0-152.059-31.491-183.55C385.019 32 334.329 32 232.96 32h-17.92C113.671 32 62.981 32 31.49 63.49M75.6 168.268h51.147c1.68 85.493 39.386 121.706 69.253 129.173V168.267h48.16V242c29.493-3.173 60.48-36.773 70.933-73.733h48.16a142.26 142.26 0 0 1-65.52 92.96 147.35 147.35 0 0 1 76.72 93.52H321.44a92.15 92.15 0 0 0-77.28-66.64v66.64h-5.787c-102.106 0-160.346-70-162.773-186.48"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.sections", "navigation.instant", "navigation.footer", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u041a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u0442\u044c \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0415\u0449\u0451 1 \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.more.other": "\u0415\u0449\u0451 # \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.none": "\u0421\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0435", "search.result.other": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439: #", "search.result.placeholder": "\u041d\u0430\u0447\u043d\u0438\u0442\u0435 \u043f\u0435\u0447\u0430\u0442\u0430\u0442\u044c \u0434\u043b\u044f \u043f\u043e\u0438\u0441\u043a\u0430", "search.result.term.missing": "\u041e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442", "select.version": "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0432\u0435\u0440\u0441\u0438\u044e"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.525ec568.min.js"></script>
+      
+    
+  </body>
+</html>
