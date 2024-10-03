@@ -48,6 +48,7 @@ nav:
   - Способы форматирования результатов запроса: formatting_selected_data.md
   - Агрегация данных: summarizing_your_data.md
   - Группировка данных в запросе: summaries_of_groups_of_data.md
+  - Объединение таблиц в запросе: inner_joins.md
 
 extra:
   social:
